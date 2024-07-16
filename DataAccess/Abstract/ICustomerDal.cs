@@ -1,6 +1,8 @@
-﻿namespace DataAccess.Abstract
+﻿using Domain;
+
+namespace DataAccess.Abstract
 {
-    public interface ICustomerDal
+    public interface ICustomerDal: IGenericDal<Customer>
     {
     }
 }

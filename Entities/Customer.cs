@@ -1,4 +1,4 @@
-﻿namespace Entities.Concrete
+﻿namespace Domain
 {
     public class Customer
     {
