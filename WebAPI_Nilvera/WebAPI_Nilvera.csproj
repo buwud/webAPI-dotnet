@@ -25,14 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\" />
-    <Folder Include="Areas\Customer\Controllers\" />
-    <Folder Include="Areas\Customer\Data\" />
-    <Folder Include="Areas\Customer\Models\" />
-    <Folder Include="Areas\Customer\Views\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Business\Application.csproj" />
     <ProjectReference Include="..\DataAccess\Infrastructure.csproj" />
     <ProjectReference Include="..\Entities\Domain.csproj" />

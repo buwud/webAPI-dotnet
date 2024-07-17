@@ -1,5 +1,4 @@
-﻿using DataAccess.Abstract;
-using DataAccess.Contexts;
+﻿using DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.Repository

@@ -1,6 +1,8 @@
-﻿namespace Business.Commands.Customer
+﻿using MediatR;
+
+namespace Business.Commands.Customer
 {
-    public class GetCustomerCommand
+    public class GetCustomerCommand:IRequest<int>
     {
     }
 }

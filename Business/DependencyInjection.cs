@@ -12,6 +12,5 @@ namespace Application
             services.AddMediatR(Assembly.GetExecutingAssembly());
         }
         #endregion
-
     }
 }
