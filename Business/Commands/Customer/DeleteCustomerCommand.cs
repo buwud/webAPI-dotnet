@@ -26,7 +26,6 @@ namespace Business.Commands.Customer
                     var result = await connection.ExecuteAsync(sql, new { ClientID = command.Id });
                     return result;
                 }
-
             }
         }
     }
