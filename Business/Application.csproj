@@ -27,4 +27,9 @@
     <ProjectReference Include="..\Entities\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Handlers\Customer\CommandHandlers\" />
+    <Folder Include="Handlers\Customer\QueryHandlers\" />
+  </ItemGroup>
+
 </Project>
