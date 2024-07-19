@@ -13,7 +13,7 @@ namespace Infrastructure.Concrete
             _context = context;
         }
 
-        public async Task<int> Create( Customer customer )
+        public async Task<int> Create( CustomerEntity customer )
         {
             var sql = "INSERT INTO Customers (Name, Surname, Email, Phone) VALUES (@Name, @Surname, @Email, @Phone)";
             using ( var connection = _context.CreateConnection() )
@@ -31,25 +31,25 @@ namespace Infrastructure.Concrete
             }
         }
 
-        public async Task<Customer> GetById( int id )
+        public async Task<CustomerEntity> GetById( int id )
         {
             var sql = "SELECT * FROM Customers WHERE Id = @Id";
             using ( var connection = _context.CreateConnection() )
             {
-                return await connection.QuerySingleOrDefaultAsync<Customer>(sql, new { Id = id });
+                return await connection.QuerySingleOrDefaultAsync<CustomerEntity>(sql, new { Id = id });
             }
         }
 
-        public async Task<IEnumerable<Customer>> GetListAll()
+        public async Task<IEnumerable<CustomerEntity>> GetListAll()
         {
             var sql = "SELECT * FROM Customers";
             using ( var connection = _context.CreateConnection() )
             {
-                return await connection.QueryAsync<Customer>(sql);
+                return await connection.QueryAsync<CustomerEntity>(sql);
             }
         }
 
-        public async Task<int> Update( Customer customer )
+        public async Task<int> Update( CustomerEntity customer )
         {
             var sql = "UPDATE Customers SET Name = @Name, Surname = @Surname, Email = @Email, Phone = @Phone WHERE Id = @Id";
             using ( var connection = _context.CreateConnection() )

@@ -4,10 +4,10 @@ namespace Infrastructure.Abstract
 {
     public interface ICustomerRepository
     {
-        Task<int> Create( Customer customer );
-        Task<int> Update( Customer customer );
+        Task<int> Create( CustomerEntity customer );
+        Task<int> Update( CustomerEntity customer );
         Task<int> Delete( int id );
-        Task<Customer> GetById( int id );
-        Task<IEnumerable<Customer>> GetListAll();
+        Task<CustomerEntity> GetById( int id );
+        Task<IEnumerable<CustomerEntity>> GetListAll();
     }
 }
