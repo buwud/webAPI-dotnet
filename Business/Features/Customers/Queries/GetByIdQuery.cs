@@ -1,12 +1,12 @@
 ﻿using Domain;
 using MediatR;
 
-namespace Application.Features.Queries.Customer
+namespace Application.Features.Customers.Queries
 {
     public class GetByIdQuery : IRequest<CustomerEntity>
     {
         public int Id { get; set; }
-        public GetByIdQuery( int id )
+        public GetByIdQuery(int id)
         {
             Id = id;
         }
