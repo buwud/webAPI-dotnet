@@ -1,11 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Domain
+﻿namespace Application.Features.Customers.Dtos
 {
-    public class CustomerEntity
+    public class CustomerDto
     {
-        [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI_Nilvera", "WebAPI_Nilvera\WebAPI_Nilvera.csproj", "{5618CE26-96FA-4911-9B62-231B7DCD4D8D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Entities\Domain.csproj", "{B4010157-94F6-48FD-9BA0-E4C6344B9935}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Entities\Core.csproj", "{B4010157-94F6-48FD-9BA0-E4C6344B9935}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "DataAccess\Infrastructure.csproj", "{2E253DDB-30E8-4B0E-81F9-D54420C2657C}"
 EndProject
