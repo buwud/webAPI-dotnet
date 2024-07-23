@@ -8,8 +8,8 @@ namespace Application.Mapping
     {
         public CustomerProfile()
         {
-            CreateMap<CustomerEntity,CustomerDto>();
-            CreateMap<CreateOrUpdateCustomerDto,CustomerEntity>();
+            CreateMap<CustomerEntity, CustomerDto>();
+            CreateMap<CustomerDto, CustomerEntity>();
         }
     }
 }

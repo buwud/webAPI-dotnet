@@ -16,7 +16,10 @@ namespace Infrastructure.Repository
         public async Task<int> AddAsync( CustomerEntity entity )
         {
             entity.CreatedAt = DateTime.Now;
-            var sql = "INSERT INTO Customers (Name, Surname, Email, Phone) VALUES (@Name, @Surname, @Email, @Phone);";
+            entity.UpdatedAt = DateTime.Now;
+
+            var sql = "INSERT INTO Customers (Name, Surname, Email, Phone, CreatedAt, UpdatedAt) VALUES (@Name, @Surname, @Email, @Phone, @CreatedAt, @UpdatedAt);";
+
             using ( var connection = _context.CreateConnection() )
             {
                 connection.Open();
@@ -36,14 +39,14 @@ namespace Infrastructure.Repository
             }
         }
 
-        public async Task<IReadOnlyList<CustomerEntity>> GetAllAsync()
+        public async Task<IEnumerable<CustomerEntity>> GetAllAsync()
         {
             var sql = "SELECT * FROM Customers;";
             using ( var connection = _context.CreateConnection() )
             {
                 connection.Open();
                 var result = await connection.QueryAsync<CustomerEntity>(sql);
-                return result.ToList();
+                return result;
             }
         }
 

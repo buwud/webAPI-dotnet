@@ -9,6 +9,13 @@ namespace Application.Features.Customers.Queries.GetAll
     {
         private readonly ICustomerRepository _customerRepository;
         private readonly IMapper _mapper;
+
+        public GetAllQueryHandler( ICustomerRepository customerRepository, IMapper mapper )
+        {
+            _customerRepository = customerRepository;
+            _mapper = mapper;
+        }
+
         public async Task<IEnumerable<CustomerDto>> Handle( GetAllQuery request, CancellationToken cancellationToken )
         {
             var customers = await _customerRepository.GetAllAsync();
