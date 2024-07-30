@@ -1,6 +1,0 @@
-@WebAPI_Nilvera_HostAddress = http://localhost:5138
-
-GET {{WebAPI_Nilvera_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

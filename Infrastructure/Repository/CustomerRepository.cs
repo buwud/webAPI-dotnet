@@ -57,6 +57,10 @@ namespace Infrastructure.Repository
             {
                 connection.Open();
                 var result = await connection.QuerySingleOrDefaultAsync<CustomerEntity>(sql, new { Id = id });
+                if ( result == null )
+                {
+                    throw new Exception("Customer not found");
+                }
                 return result;
             }
         }

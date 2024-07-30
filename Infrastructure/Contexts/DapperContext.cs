@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using MySqlConnector;
 using System.Data;
 
 namespace Infrastructure.Contexts
@@ -12,9 +13,9 @@ namespace Infrastructure.Contexts
         public DapperContext( IConfiguration configuration )
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("CustomerDB");
+            _connectionString = _configuration.GetConnectionString("Default");
         }
 
-        public IDbConnection CreateConnection() => new SqlConnection(_connectionString);
+        public IDbConnection CreateConnection() => new MySqlConnection(_connectionString);
     }
 }

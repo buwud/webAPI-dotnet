@@ -1,5 +1,7 @@
 using DataAccess.Contexts;
 using Infrastructure;
+using MySqlConnector;
+using System.Configuration;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddInfrastructure();
+
+builder.Services.AddMySqlDataSource(builder.Configuration.GetConnectionString("Default")!);
+
+
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -25,6 +32,10 @@ if ( app.Environment.IsDevelopment() )
 }
 
 app.UseHttpsRedirection();
+
+//
+//
+//app.context.Database.Migrate();
 
 app.UseAuthorization();
 

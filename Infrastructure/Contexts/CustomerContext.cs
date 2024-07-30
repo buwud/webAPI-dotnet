@@ -6,19 +6,17 @@ namespace DataAccess.Contexts
 {
     public class CustomerContext : DbContext
     {
-        public string getConnectionString()
-        {
-            ConfigurationManager configurationManager = new ConfigurationManager();
+        private readonly IConfiguration _configuration;
 
-            configurationManager.AddJsonFile("appsettings.json");
-            return configurationManager.GetConnectionString("CustomerDB");
+        public CustomerContext( IConfiguration configuration )
+        {
+            _configuration = configuration;
         }
 
         protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
         {
-            string connection = getConnectionString();
-
-            optionsBuilder.UseSqlServer(connection);
+            string connection = _configuration.GetConnectionString("Default");
+            optionsBuilder.UseMySql(connection, ServerVersion.AutoDetect(connection));
         }
 
         public DbSet<CustomerEntity> Customers { get; set; }
