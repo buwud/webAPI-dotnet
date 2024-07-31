@@ -13,9 +13,9 @@ namespace Infrastructure.Contexts
         public DapperContext( IConfiguration configuration )
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("Default");
+            _connectionString = _configuration.GetConnectionString("CustomerDB");
         }
 
-        public IDbConnection CreateConnection() => new MySqlConnection(_connectionString);
+        public IDbConnection CreateConnection() => new SqlConnection(_connectionString);
     }
 }

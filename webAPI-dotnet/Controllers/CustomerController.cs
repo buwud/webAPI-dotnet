@@ -48,5 +48,7 @@ namespace WebAPI_Nilvera.Controllers
             var data = await _unitOfWork.Customers.DeleteAsync(id);
             return Ok(data);
         }
+
+      
     }
 }
