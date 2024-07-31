@@ -6,6 +6,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>9ca7663e-697e-482e-982f-8a5ac12d8a2b</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
+		<EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -30,6 +32,12 @@
 		<ProjectReference Include="..\Core\Core.csproj" />
 
 		<ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ContainerEnvironmentVariable Include="ASPNETCORE_HTTPS_PORTS">
+	    <Value>8081</Value>
+	  </ContainerEnvironmentVariable>
 	</ItemGroup>
 
 
