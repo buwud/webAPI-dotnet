@@ -17,7 +17,7 @@ namespace CustomerUnitTest.Mappings
             {
                 cfg.AddProfile<CustomerProfile>();
             });
-            _mapper=_configuration.CreateMapper();
+            _mapper = _configuration.CreateMapper();
         }
         [Fact]
         public void ShouldBeValidConfiguration()
@@ -25,8 +25,8 @@ namespace CustomerUnitTest.Mappings
             _configuration.AssertConfigurationIsValid();
         }
         [Theory]
-        [InlineData(typeof(CustomerDto),typeof(CustomerEntity))]
-        [InlineData(typeof(CustomerEntity),typeof(CustomerEntity))]
+        [InlineData(typeof(CreateCustomerRequest), typeof(CustomerEntity))]
+        [InlineData(typeof(CustomerEntity), typeof(CustomerResponse))]
         public void Map_SourceToDestination_ExistConfiguration( Type origin, Type destination )
         {
             var instance = FormatterServices.GetUninitializedObject(origin);
