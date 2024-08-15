@@ -16,7 +16,13 @@ namespace Application.Features.Customers.Dtos
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
-    public class CreateCustomerRequest
+    public class CreateCustomerRequest : UpdateCustomerRequest
+    {
+        [Required]
+        public string Email { get; set; }
+
+    }
+    public class UpdateCustomerRequest
     {
         [Required]
         [StringLength(30, MinimumLength = 3)]
@@ -24,8 +30,6 @@ namespace Application.Features.Customers.Dtos
         [Required]
         [StringLength(30, MinimumLength = 3)]
         public string Surname { get; set; }
-        [Required]
-        public string Email { get; set; }
         [Required]
         public string Phone { get; set; }
     }
