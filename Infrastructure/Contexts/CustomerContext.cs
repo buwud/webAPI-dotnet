@@ -6,6 +6,9 @@ namespace DataAccess.Contexts
 {
     public class CustomerContext : DbContext
     {
+        public CustomerContext( DbContextOptions<CustomerContext> options ) : base(options)
+        {
+        }
         public string getConnectionString()
         {
             ConfigurationManager configurationManager = new ConfigurationManager();
