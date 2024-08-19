@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using Core.Entities;
-using DataAccess.Contexts;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.Contexts;
+using Microsoft.Extensions.Configuration;
 using System.Data.Common;
 using System.Data.SqlClient;
 
@@ -12,41 +12,43 @@ namespace CustomerIntegrationTests
 
         private static readonly object _lock = new object();
         private static bool _databaseInitialized;
-
         private string _databaseName = "CustomerDB";
-
         public DbConnection Connection { get; }
-        public SharedDatabaseFixture()
+        public DapperContext DapperContext { get; }
+        public List<CustomerEntity> Customers { get; private set; } = new List<CustomerEntity>();
+
+        public SharedDatabaseFixture( DapperContext dapperContext )
         {
-            Connection = new SqlConnection($"Filename={_databaseName}");
+            Connection = new SqlConnection("server=(LocalDB)\\MSSQLLocalDB;database=CustomerDB;integrated security=true");
+            DapperContext = new DapperContext(new ConfigurationBuilder().Build());
             Seed();
         }
-        public CustomerContext CreateContext( DbTransaction? transaction = null )
-        {
-            var context = new CustomerContext(new DbContextOptionsBuilder<CustomerContext>().UseSqlServer(Connection).Options);
-            if ( transaction != null )
-            {
-                context.Database.UseTransaction(transaction);
-            }
-            return context;
-        }
+
         private void Seed()
         {
             lock ( _lock )
             {
                 if ( _databaseInitialized )
                 {
-                    using ( var conn = CreateContext() )
+                    using ( var conn = DapperContext.CreateConnection() )
                     {
-                        conn.Database.EnsureDeleted();
-                        conn.Database.EnsureDeleted();
+                        conn.Open();
+                        conn.ChangeDatabase(_databaseName);
 
+                        //clear all data
+                        var command = conn.CreateCommand();
+                        command.CommandText = "DELETE FROM Customers";
+                        command.ExecuteNonQuery();
+
+                        //seed new datas
+                        SeedData();
+                        _databaseInitialized = true;
 
                     }
                 }
             }
         }
-        private void SeedData( CustomerContext context )
+        private void SeedData()
         {
             var customerIds = 1;
             var fakeCustomers = new Faker<CustomerEntity>()
@@ -58,8 +60,18 @@ namespace CustomerIntegrationTests
                 .RuleFor(x => x.CreatedAt, f => DateTime.UtcNow)
                 .RuleFor(x => x.UpdatedAt, f => DateTime.UtcNow)
                 .Generate(10);
-            context.AddRange(fakeCustomers);
-            context.SaveChanges();
+
+            using ( var conn = DapperContext.CreateConnection() )
+            {
+                conn.Open();
+                foreach ( var customer in fakeCustomers )
+                {
+                    var command = conn.CreateCommand();
+                    command.CommandText = $"INSERT INTO Customers (Id, Name, Surname, Email, Phone, CreatedAt, UpdatedAt) VALUES ({customer.Id},@{customer.Name}, {customer.Surname}, {customer.Email}, {customer.Phone}, {customer.CreatedAt}, {customer.UpdatedAt})";
+                    command.ExecuteNonQuery();
+                }
+            }
+            Customers.AddRange(fakeCustomers);
         }
         public void Dispose() => Connection.Dispose();
     }
