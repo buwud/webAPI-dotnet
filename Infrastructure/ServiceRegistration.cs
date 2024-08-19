@@ -1,5 +1,4 @@
 ﻿using Application.Interfaces;
-using Infrastructure.Contexts;
 using Infrastructure.Repository;
 using Microsoft.Extensions.DependencyInjection;
 namespace Infrastructure

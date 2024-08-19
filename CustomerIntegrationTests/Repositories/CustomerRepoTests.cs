@@ -1,46 +1,28 @@
 ﻿using Application.Interfaces;
-using Application.Mapping;
 using AutoMapper;
-using Infrastructure.Contexts;
-using Infrastructure.Repository;
 
-namespace CustomerIntegrationTests.Repositories
+[Collection("CustomerRepoTests Collection")]
+public class CustomerRepoTests
 {
-    public class CustomerRepoTests : IClassFixture<SharedDatabaseFixture>
+    private readonly ICustomerRepository _customerRepository;
+    private readonly SharedDatabaseFixture _fixture;
+
+    public CustomerRepoTests( ICustomerRepository customerRepository, SharedDatabaseFixture fixture )
     {
-        private readonly IMapper _mapper;
-        private readonly DapperContext _context;
-        private readonly ICustomerRepository _customerRepository;
-        private SharedDatabaseFixture Fixture { get; }
+        _customerRepository = customerRepository;
+        _fixture = fixture;
+    }
 
-        public CustomerRepoTests( IMapper mapper, DapperContext dapperContext, ICustomerRepository customerRepository, SharedDatabaseFixture fixture )
-        {
-            Fixture = fixture;
+    [Fact]
+    public async Task GetCustomers_ReturnsAllCustomers()
+    {
+        // Arrange
+        var expected = _fixture.Customers.Count;
 
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new CustomerProfile());
-            });
+        // Act
+        var result = ( await _customerRepository.GetAllAsync() ).Count();
 
-            _mapper = configuration.CreateMapper();
-            _context = dapperContext;
-            _customerRepository = customerRepository;
-        }
-        // Tests go here
-        [Fact]
-        public async Task GetCustomers_ReturnsAllCustomers()
-        {
-            // Arrange
-            var expected = Fixture.Customers.Count;
-
-            // Act
-            var result = ( await _customerRepository.GetAllAsync() ).Count();
-
-            // Assert
-            Assert.Equal(expected, result);
-        }
-
-
-
+        // Assert
+        Assert.Equal(expected, result);
     }
 }

@@ -1,5 +1,9 @@
+using Application.Interfaces;
+using Application.Mapping;
+using AutoMapper;
 using DataAccess.Contexts;
 using Infrastructure;
+using Infrastructure.Repository;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +18,16 @@ builder.Services.AddDbContext<CustomerContext>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<DapperContext>();
+
+var mapperConfig = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile(new CustomerProfile());
+});
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddSingleton<ICustomerRepository, CustomerRepository>();
 
 var app = builder.Build();
 

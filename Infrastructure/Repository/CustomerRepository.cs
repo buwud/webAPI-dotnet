@@ -1,7 +1,6 @@
 ﻿using Application.Interfaces;
 using Core.Entities;
 using Dapper;
-using Infrastructure.Contexts;
 
 namespace Infrastructure.Repository
 {
