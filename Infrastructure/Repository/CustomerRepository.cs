@@ -17,13 +17,13 @@ namespace Infrastructure.Repository
             entity.CreatedAt = DateTime.Now;
             entity.UpdatedAt = DateTime.Now;
 
-            var sql = "INSERT INTO Customers (Name, Surname, Email, Phone, CreatedAt, UpdatedAt) VALUES (@Name, @Surname, @Email, @Phone, @CreatedAt, @UpdatedAt);";
+            var sql = "INSERT INTO Customers (Name, Surname, Email, Phone, CreatedAt, UpdatedAt) VALUES (@Name, @Surname, @Email, @Phone, @CreatedAt, @UpdatedAt); SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
             using ( var connection = _context.CreateConnection() )
             {
                 connection.Open();
-                var result = await connection.ExecuteAsync(sql, entity);
-                return result;
+                var id = await connection.QuerySingleAsync<int>(sql, entity);
+                return id; // Son eklenen ID'yi döndür
             }
         }
 

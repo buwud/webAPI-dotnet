@@ -29,7 +29,7 @@ namespace WebAPI_Nilvera.Controllers
             return Ok(customer);
         }
         [HttpPost]
-        public async Task<IActionResult> Create( CustomerEntity customer )
+        public async Task<IActionResult> Create( [FromBody] CustomerEntity customer )
         {
             await _unitOfWork.Customers.AddAsync(customer);
             return Ok(customer);
@@ -49,6 +49,6 @@ namespace WebAPI_Nilvera.Controllers
             return Ok(data);
         }
 
-      
+
     }
 }
