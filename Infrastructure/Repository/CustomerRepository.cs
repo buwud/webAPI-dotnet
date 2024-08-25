@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Core.Entities;
 using Dapper;
+using Microsoft.Data.Sqlite;
 
 namespace Infrastructure.Repository
 {
@@ -14,16 +15,22 @@ namespace Infrastructure.Repository
 
         public async Task<int> AddAsync( CustomerEntity entity )
         {
-            entity.CreatedAt = DateTime.Now;
-            entity.UpdatedAt = DateTime.Now;
+            var sqlServerSql = @"
+        INSERT INTO Customers (Name, Surname, Email, Phone, CreatedAt, UpdatedAt)
+        VALUES (@Name, @Surname, @Email, @Phone, @CreatedAt, @UpdatedAt);
+        SELECT SCOPE_IDENTITY();";
 
-            var sql = "INSERT INTO Customers (Name, Surname, Email, Phone, CreatedAt, UpdatedAt) VALUES (@Name, @Surname, @Email, @Phone, @CreatedAt, @UpdatedAt); SELECT CAST(SCOPE_IDENTITY() AS INT);";
+            var sqliteSql = @"
+        INSERT INTO Customers (Name, Surname, Email, Phone, CreatedAt, UpdatedAt)
+        VALUES (@Name, @Surname, @Email, @Phone, @CreatedAt, @UpdatedAt);
+        SELECT last_insert_rowid();";
+
+            var sql = _context.CreateConnection() is SqliteConnection ? sqliteSql : sqlServerSql;
 
             using ( var connection = _context.CreateConnection() )
             {
-                connection.Open();
-                var id = await connection.QuerySingleAsync<int>(sql, entity);
-                return id; // Son eklenen ID'yi döndür
+                var id = await connection.ExecuteScalarAsync<int>(sql, entity);
+                return id;
             }
         }
 
