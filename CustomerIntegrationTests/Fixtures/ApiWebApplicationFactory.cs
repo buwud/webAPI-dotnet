@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CustomerIntegrationTests
+namespace CustomerIntegrationTests.Fixtures
 {
     public class ApiWebApplicationFactory : WebApplicationFactory<Program>
     {
         public IConfiguration Configuration { get; private set; }
-        protected override void ConfigureWebHost( IWebHostBuilder builder )
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureAppConfiguration(config =>
             {
@@ -22,7 +22,7 @@ namespace CustomerIntegrationTests
 
             builder.ConfigureTestServices(services =>
             {
-                //bura dolabilir heralde
+                //bura dolabilir heralde ama gerek yok gibi
             });
         }
     }
