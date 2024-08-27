@@ -20,16 +20,9 @@ namespace Infrastructure.Repository
         VALUES (@Name, @Surname, @Email, @Phone, @CreatedAt, @UpdatedAt);
         SELECT SCOPE_IDENTITY();";
 
-            var sqliteSql = @"
-        INSERT INTO Customers (Name, Surname, Email, Phone, CreatedAt, UpdatedAt)
-        VALUES (@Name, @Surname, @Email, @Phone, @CreatedAt, @UpdatedAt);
-        SELECT last_insert_rowid();";
-
-            var sql = _context.CreateConnection() is SqliteConnection ? sqliteSql : sqlServerSql;
-
             using ( var connection = _context.CreateConnection() )
             {
-                var id = await connection.ExecuteScalarAsync<int>(sql, entity);
+                var id = await connection.ExecuteScalarAsync<int>(sqlServerSql, entity);
                 return id;
             }
         }

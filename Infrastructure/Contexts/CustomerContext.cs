@@ -14,7 +14,8 @@ namespace DataAccess.Contexts
             ConfigurationManager configurationManager = new ConfigurationManager();
 
             configurationManager.AddJsonFile("appsettings.json");
-            return configurationManager.GetConnectionString("CustomerDB");
+            return configurationManager.GetConnectionString("CustomerTestDB") ??
+                configurationManager.GetConnectionString("CustomerDB");
         }
 
         protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
