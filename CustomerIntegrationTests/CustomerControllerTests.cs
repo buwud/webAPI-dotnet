@@ -42,6 +42,7 @@ namespace CustomerIntegrationTests
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             };
+            //
             var response = await _httpClient.PostAsync("/api/Customer", new StringContent(JsonConvert.SerializeObject(customer), Encoding.UTF8, "application/json"));
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
@@ -49,15 +50,24 @@ namespace CustomerIntegrationTests
             content.Should().BeEquivalentTo(customer, options => options.ComparingByMembers<CustomerEntity>());
         }
         //put
-        //[Fact]
-        //public async Task PUT_updates_customer()
-        //{
-        //    var customer = new CustomerEntity
-        //    {
-        //        Name = "Alice",
-        //        Surname = "Johnson",
-        //        Email = ""
-        //    }
-        //}
+        [Fact]
+        public async Task PUT_updates_customer()
+        {
+            var customer = new CustomerEntity
+            {
+                Name = "buse",
+                Surname = "duran",
+                Email = "buse@gmail.com",
+                Phone = "55555",
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+            var response = await _httpClient.PutAsync("/api/Customer/1", new StringContent(JsonConvert.SerializeObject(customer), Encoding.UTF8, "application/json"));
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            var content = JsonConvert.DeserializeObject<CustomerEntity>(await response.Content.ReadAsStringAsync());
+            content.Should().BeEquivalentTo(customer, options => options.ComparingByMembers<CustomerEntity>());
+
+        }
     }
 }
