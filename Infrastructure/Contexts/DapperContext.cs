@@ -8,7 +8,6 @@ public class DapperContext : IDisposable
     private readonly IConfiguration _configuration;
     private readonly string _connectionString;
 
-    // Constructor for production use
     public DapperContext( IConfiguration configuration, string connectionStringName = "CustomerDB" )
     {
         _configuration = configuration;
