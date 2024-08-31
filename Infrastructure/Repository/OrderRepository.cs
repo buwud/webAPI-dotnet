@@ -33,19 +33,42 @@ namespace Infrastructure.Repository
             }
         }
 
-        public Task<IEnumerable<OrderEntity>> GetAllAsync()
+        public async Task<IEnumerable<OrderEntity>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var sql = "SELECT * FROM Orders;";
+            using ( var connection = _context.CreateConnection() )
+            {
+                connection.Open();
+                var result = await connection.QueryAsync<OrderEntity>(sql);
+                return result;
+            }
         }
 
-        public Task<OrderEntity> GetByIdAsync( int id )
+        public async Task<OrderEntity> GetByIdAsync( int id )
         {
-            throw new NotImplementedException();
+            var sql = "SELECT * FROM Orders WHERE Id = @Id;";
+            using ( var connection = _context.CreateConnection() )
+            {
+                connection.Open();
+                var result = await connection.QuerySingleOrDefaultAsync<OrderEntity>(sql, new { Id = id });
+                if ( result == null )
+                {
+                    throw new Exception("Order not found");
+                }
+                return result;
+            }
         }
 
-        public Task<int> UpdateAsync( OrderEntity entity )
+        public async Task<int> UpdateAsync( OrderEntity entity )
         {
-            throw new NotImplementedException();
+            entity.UpdatedAt = DateTime.Now;
+            var sql = "UPDATE Orders SET Name = @Name, Status = @Status, Address = @Address, Note = @Note, CustomerId = @CustomerId WHERE Id = @Id;";
+            using ( var connection = _context.CreateConnection() )
+            {
+                connection.Open();
+                var result = await connection.ExecuteAsync(sql, entity);
+                return result;
+            }
         }
     }
 }
